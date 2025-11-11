@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSU Online Shop</title>
+	<style>
+        .custom-div {
+            background-image: url('IMG/DSC_8815-squoosh (1).jpg');
+            background-size: cover;
+            background-position: center;
+            height: 300px; /* Set the height of the div */
+            padding: 50px;
+            color: black;
+        }
+		
+		 .container {
+			max-width: 100%;
+			padding: 0 20px;
+			margin: 0 auto;
+		}
+		.picture{
+			height:230px;
+			width:264px;
+			text-align:center;
+			border-radius: 3%;
+			box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5)
+		}
+		
+		
+    </style>
+	<link rel = 'stylesheet' href='style.css'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+
+  </head>
+  <body>
+    
+ <section class='header'>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	<nav class="navbar bg-body-tertiary">
+		<div class="container">
+			<a class="navbar-brand" href="page1Home.php">
+				<img src="IMG/Logo-PSU-EH-011.png" alt="PSULOGO" width="150" height="60" style="display: block; float: left;">
+			</a>
+			<form class="d-flex" role="search" action="result_page.php" method="post">
+				<input class="form-control me-2" name = "search" type="search" value = "<?php if(isset($_POST['search'])){echo $_POST['search'];}?>"placeholder="Search" aria-label="Search">
+				<button class="btn btn-outline-info" type="submit">Search</button>
+            	<button class="logout" onclick="location.href='logout.php'" type="button">Logout</button>
+			</form>
+		</div>
+	</nav>
+
+    <div class="row">
+		<div class="col border-0" style = "background-color: #293E6A; padding-bottom: 40px">
+		</div>
+	</div>
+  
+    <div class="row">
+		<div class="custom-div">
+		</div>
+	</div>
+  
+    <div class="row">
+		<div class="col border-0" style = "background-color: #293E6A; padding-bottom: 40px">
+		</div>
+	</div>
+	
+	<div class = 'container'>
+	<div class="row">
+		<div class="col-2 border-end" style = "padding-bottom: 250px">
+			<nav>
+				<div class = 'nav-links'>
+					<br><br><br><br>
+					<br><p><a href="maintags.php?type=student1">นักศึกษาปีที่ 1</a></p>
+					<br><p><a href="maintags.php?type=student2">นักศึกษาปีที่ 2</a></p>
+					<br><p><a href="maintags.php?type=student3">นักศึกษาปีที่ 3</a></p>
+					<br><p><a href="maintags.php?type=student4">นักศึกษาปีที่ 4</a></p>
+					<br><p><a href="maintags.php?type=student5">นักศึกษาปีที่ 4+</a></p>
+					<br><p><a href="maintags.php?type=teacher">สำหรับอาจารย์</a></p>
+					<br><p><a href="maintags.php?type=cloth">เสื้อฟ้าและเครื่องแต่งกาย</a></p>
+					<br><p><a href="maintags.php?type=elec">อุปกรณ์ไฟฟ้า</a></p>
+					<br><p><a href="maintags.php?type=study">การเรียน</a></p>
+					<br><p><a href="maintags.php?type=util">ของใช้</a></p>
+					<br><p><a href="maintags.php?type=other">อื่นๆ</a></p>	
+				</div>
+			</nav>
+		</div>
+		
+		<div class="col" style = "padding-bottom: 250px">
+			<?php
+				$connect = mysqli_connect("localhost", "root", "", "data");
+				if ($connect->connect_error) {
+					die("Connection failed: " . $connect->connect_error);
+				}
+				
+				$indicator = 'AAA';
+				
+				if(isset($_GET['type'])) {
+				   $type = $_GET['type'];
+    
+				   if($type === 'student1') {
+				        $indicator = '1st Year Student';
+				   } elseif($type === 'student2') {
+				        $indicator = '2nd Year Student';
+				   } elseif($type === 'student3') {
+				        $indicator = '3rd Year Student';
+				   } elseif($type === 'student4') {
+				        $indicator = '4th Year Student';
+				   } elseif($type === 'student5') {
+				        $indicator = '4th+ Year Student';
+				   } elseif($type === 'teacher') {
+				        $indicator = 'For Professor';
+				   } elseif($type === 'cloth') {
+				        $indicator = 'Cloth and Accessories';
+				   } elseif($type === 'elec') {
+				        $indicator = 'Electronics';
+				   } elseif($type === 'study') {
+				        $indicator = 'Study';
+				   } elseif($type === 'util') {
+				        $indicator = 'Utility';
+				   } elseif($type === 'other') {
+				        $indicator = 'Other(s)';
+				   }
+				} else {
+					echo "No type parameter provided.";
+				}
+				
+				
+				$sql = "SELECT products.Pro_image , products.Pro_name, products.Pro_description, products.Pro_email, products.Pro_id, tags.Tag_name
+				FROM product_tags
+				JOIN products ON product_tags.Tag_pid = products.Pro_id
+				JOIN tags ON product_tags.Tag_tn = tags.Tag_name
+				WHERE tags.Tag_name = '".$indicator."';";
+
+				
+				$result = $connect->query($sql);
+				
+				if ($result->num_rows > 0) {
+				echo '<div class="col" style = "padding-bottom: 250px">';
+				while($row = $result->fetch_assoc()) {
+					echo '<div class="card-body">';	
+		
+				    if (!empty($row['Pro_image'])) {
+						echo '<img class="picture" src="/Project/Project/Admin/'.$row['Pro_image'].'" alt="Product Image" ><br><br>';
+					} 
+					else {
+						echo "Image data is empty.";
+					}
+					echo '<br><h5 class="card-title" style="color: white;">'. $row["Pro_name"].'</h5><br>';
+					echo '<br><p><a>'. $row["Pro_email"]. '</a></p>';
+					echo '<p class="card-text" style="text-align: left; color: white;">'. $row["Pro_description"].'</p>';
+					$getnametoshop = $row["Pro_id"];
+					echo '<p style="text-align: right;"><a href="shop.php?shoptype='.$getnametoshop.'" class="btn btn-outline-light" >Buy</a></p>';
+					echo '</div>';
+					echo '<div class="col border-0" style = "background-color: #293E6A; padding-bottom: 20px"></div>';
+				}
+				echo '</div>';
+				} 
+				else {
+					echo "0 results";
+				}
+				
+				$connect->close();
+			?>
+		</div>
+	</div>
+	</div>
+    <div class="row">
+		<div class="col border-0" style = "background-color: #293E6A; padding-bottom: 40px"></div>
+
+	
+	</section>
+  </body>
+</html>
